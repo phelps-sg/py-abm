@@ -81,7 +81,7 @@ class Simulation(Thread):
         """Return true iff the stopping criterion is reached"""
         return self.environment.time >= self.max_duration
 
-    def run(self, finished):
+    def run(self):
         """
         Simulate the model by repeatedly invoking agent interactions until
         the stopping criterion is reached.
