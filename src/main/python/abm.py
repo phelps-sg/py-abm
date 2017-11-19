@@ -35,10 +35,10 @@ class Agent(object):
 class IntelligentAgent(Agent, LearningAgent):
     """An agent that learns through a value-based RL algorithm"""
   
-    def __init__(self, name, num_states, num_actions, epsilon = 0.3, gamma = 0.99, alpha = 0.95):
+    def __init__(self, name, num_states, num_actions, epsilon=0.3, gamma=0.99, alpha=0.95):
         self.controller = ActionValueTable(num_states, num_actions)
         self.controller.initialize(np.random.rand(num_states * num_actions))
-        self.learner = Q(gamma = gamma, alpha = alpha)
+        self.learner = Q(gamma=gamma, alpha=alpha)
         self.learner.batchMode = False
         self.learner.explorer.epsilon = epsilon
         LearningAgent.__init__(self, self.controller, self.learner)
@@ -62,7 +62,7 @@ class Environment(object):
 class Simulation(Thread):
     """A single realisation of an agent-based model"""
 
-    def __init__(self, environment, max_duration = 100): 
+    def __init__(self, environment, max_duration=100):
         self.environment = environment
         self.population = environment.agents
         self.is_finished = False
@@ -105,7 +105,7 @@ class SimulationController(object):
     params           -- A dict mapping parameter names onto no-arg functions for intialising them (default {}).
     """
     
-    def __init__(self, sim_factory, n = 100, data_collectors = {}, params = {}):
+    def __init__(self, sim_factory, n=100, data_collectors={}, params={}):
         self.sim_factory = sim_factory
         self.params = params
         self.n = n

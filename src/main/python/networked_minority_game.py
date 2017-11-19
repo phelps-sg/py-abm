@@ -13,7 +13,7 @@ class BarCustomer(IntelligentAgent):
   
     memory_size = 2
     
-    def __init__(self, name, epsilon = 0.3):
+    def __init__(self, name, epsilon=0.3):
         self.decision = 1
         self.payoff = 0
         super(BarCustomer, self).__init__(name, num_states=(2 ** self.memory_size), num_actions=2, epsilon=epsilon)
@@ -110,9 +110,9 @@ class Visualisation(TimedAnimation):
         
     def plot_time_series(self):
         for s in ALL_STATES:
-            self.lines[s], = self.ax_ts.plot(self.model.time_series[s], 
-                                                            color = s.color, 
-                                                            label = s.label)
+            self.lines[s], = self.ax_ts.plot(self.model.time_series[s],
+                                                            color=s.color,
+                                                            label=s.label)
     def plot_network(self):
         return nx.draw(self.model.get_graph(), self.node_pos, ax=self.ax_network)
     
@@ -120,10 +120,10 @@ class Visualisation(TimedAnimation):
          colors = [self.colors[agent.decision] for agent in self.model.population]
          graph = self.model.get_graph()
          return [nx.draw_networkx_nodes(graph, self.node_pos,
-                                                    nodelist = graph.nodes(),
-                                                    node_color = colors,
-                                                    ax = self.ax_network)]
      
+                                                    nodelist=graph.nodes(),
+                                                    node_color=colors,
+                                                    ax=self.ax_network)]
     def copy_time_series(self):
         result = dict()
         for s in ALL_STATES:

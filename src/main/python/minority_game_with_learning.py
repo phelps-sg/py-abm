@@ -12,7 +12,7 @@ class BarCustomer(IntelligentAgent):
   
     memory_size = 5
     
-    def __init__(self, name, epsilon = 0.3, alpha = 0.9):
+    def __init__(self, name, epsilon=0.3, alpha=0.9):
         self.decision = randint(0, 2)
         self.payoff = 0
         super(BarCustomer, self).__init__(name, num_states=(2 ** self.memory_size), num_actions=2, epsilon=epsilon, alpha=alpha)
@@ -76,8 +76,8 @@ class ElFarolBar(Environment):
         
 class ElFarolBarSimulation(Simulation):
     
-    def __init__(self, num_agents = 101, epsilon = 0.5, 
-                     alpha = 0.9, memory_size = 5):
+    def __init__(self, num_agents=101, epsilon=0.5,
+                     alpha=0.9, memory_size=5):
         BarCustomer.memory_size = memory_size
         customers = \
             [BarCustomer("agent#%d" % (i+1), epsilon=epsilon, alpha=alpha) \
