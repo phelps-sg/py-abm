@@ -5,17 +5,14 @@
         http://sphelps.net/
 """     
 
-import pandas
-
-import numpy as np
-
 from random import shuffle
-
 from threading import Thread
-
+import logging
+import numpy as np
+import pandas
 from pybrain.rl.agents import LearningAgent
-from pybrain.rl.learners.valuebased import ActionValueTable
 from pybrain.rl.learners import Q
+from pybrain.rl.learners.valuebased import ActionValueTable
 
 
 class Agent(object):
@@ -30,7 +27,7 @@ class Agent(object):
         their own functionality here.
         """
         # The stub implementation simply prints name
-        print "%s interacting with %s" % (self.name, environment)
+        print("%s interacting with %s" % (self.name, environment))
 
 
 class IntelligentAgent(Agent, LearningAgent):
@@ -119,6 +116,7 @@ class SimulationController(object):
             self.dataset[stat] = []
         for param in params:
             self.dataset[param] = []
+        self.logger = logging.getLogger("SimulationController")
         
     def run(self):
         """
@@ -126,13 +124,13 @@ class SimulationController(object):
         the results.
         """
         for i in range(self.n):
-            print "Running simulation %d of %d ..." % ((i+1), self.n)
+            self.logger.info("Running simulation %d of %d ..." % ((i+1), self.n))
             self.initialise_parameters()
             self.record_parameters()
-            print self.current_params
+            self.logger.debug(self.current_params)
             sim = self.sim_factory(**self.current_params)
             sim.run()
-            print "done."
+            self.logger.info("done.")
             self.collect_data(sim)
             
     def collect_data(self, simulation):

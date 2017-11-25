@@ -4,6 +4,7 @@ import random
 from random import randint
 import numpy as np
 import matplotlib.pyplot as plt
+import functools
 import networkx as nx
 from matplotlib import pyplot as plt
 from matplotlib.animation import TimedAnimation    
@@ -37,7 +38,7 @@ class BarCustomer(IntelligentAgent):
     def convert_history_to_binary_str(self, environment):
         bit_strings = ["%d" % i for i in environment.history[-self.memory_size:]]     
         # Concatenate all the binary digits in the list into a single string
-        return reduce(lambda x, y: x + y, bit_strings)
+        return functools.reduce(lambda x, y: x + y, bit_strings)
          
     def make_observation(self, environment):
         return [ int(self.convert_history_to_binary_str(environment), 2) ]
@@ -158,7 +159,7 @@ my_simulation = NetworkedSimulation(Environment(customers), ElFarolBar, 500, net
 visualisatin = Visualisation(my_simulation)
 my_simulation.start()
 plt.show()
-print "done."
-print "Payoffs:"
-print [agent.payoff for agent in my_simulation.environment.agents]
+print("done.")
+print("Payoffs:")
+print([agent.payoff for agent in my_simulation.environment.agents])
 

@@ -1,5 +1,7 @@
+import logging
+logging.basicConfig(level=logging.DEBUG)
 from abm import *
-
+import functools
 from numpy.random import randint
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,7 +38,7 @@ class BarCustomer(IntelligentAgent):
     def convert_history_to_binary_str(self, environment):
         bit_strings = ["%d" % i for i in environment.history[-self.memory_size:]]     
         # Concatenate all the binary digits in the list into a single string
-        return reduce(lambda x, y: x + y, bit_strings)
+        return functools.reduce(lambda x, y: x + y, bit_strings)
          
     def make_observation(self, environment):
         return [ int(self.convert_history_to_binary_str(environment), 2) ]
@@ -85,14 +87,16 @@ class ElFarolBarSimulation(Simulation):
         environment = ElFarolBar(customers)
         super(ElFarolBarSimulation, self).__init__(environment, 
                                                     max_duration=1000)
-        
-print "Running a single simulation..."
+
+
+logging.info("Running a single simulation...")
 my_simulation = ElFarolBarSimulation()
 my_simulation.run()
-print "done."
-print "Payoffs:"
-print [agent.payoff for agent in my_simulation.environment.agents]
-print "Attendance time-series:"
+logging.info("done.")
+
+logging.info("Payoffs:")
+logging.info([agent.payoff for agent in my_simulation.environment.agents])
+logging.info("Attendance time-series:")
 plt.plot(my_simulation.environment.attendance)
 plt.show()
 
@@ -100,7 +104,7 @@ plt.show()
 params = { 
     'epsilon':      lambda: np.random.uniform(0, 1),
     'alpha':        lambda: np.random.uniform(0, 1),
-    'memory_size':  lambda: np.random.random_integers(1, 8)
+    'memory_size':  lambda: np.random.randint(1, 8+1)
 }
 
 def autocorr(x, t=1):
@@ -108,18 +112,18 @@ def autocorr(x, t=1):
 
 # Data to collect from each realisation
 data_collectors = { 
-    'at_mean':       lambda env: np.mean(env.attendance), 
-    'at_var':        lambda env: np.var(env.attendance),
+    'at_mean':  lambda env: np.mean(env.attendance),
+    'at_var':   lambda env: np.var(env.attendance),
     'ata':      lambda env: abs(autocorr(env.attendance))
 }
 
 # Run 100 simulations with the above parameters and data
-sim_controller = SimulationController(ElFarolBarSimulation, 30, data_collectors, params)
+sim_controller = SimulationController(ElFarolBarSimulation, 100, data_collectors, params)
 sim_controller.run()
 
 # Return the resulting dataset as a data frame
 data = sim_controller.data_frame()
-print data
+logging.info(data)
 
 ########################
 # Analyse the results
@@ -140,4 +144,4 @@ for dependent_var_name in dependent_variable_names:
     X = independent_variables
     X = sm.add_constant(X)
     regression_results = sm.OLS(Y, X).fit()
-    print regression_results.summary()
+    logging.info(regression_results.summary())
