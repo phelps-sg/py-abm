@@ -133,13 +133,10 @@ logging.info(data)
 scatter_matrix(data)
 
 # Subset of the data containing parameters
-independent_variables = data[params.keys()]
-
-# The names of the dependent variables
-dependent_variable_names = data_collectors.keys()
+independent_variables = data[[k for k in params.keys()]]
 
 # Perform multivariate regression on each dependent variable
-for dependent_var_name in dependent_variable_names:
+for dependent_var_name in data_collectors.keys():
     Y = data[dependent_var_name]
     X = independent_variables
     X = sm.add_constant(X)
