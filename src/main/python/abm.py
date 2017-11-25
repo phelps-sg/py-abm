@@ -87,8 +87,10 @@ class Simulation(Thread):
         """
         while not self.finished():
             self.single_step()
-     
-     
+        else:
+            self.is_finished = True
+
+
 class SimulationController(object):
     """
     Manage one or more realisations of a simulation model.
