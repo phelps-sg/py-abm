@@ -17,6 +17,7 @@ from pybrain.rl.agents import LearningAgent
 from pybrain.rl.learners.valuebased import ActionValueTable
 from pybrain.rl.learners import Q
 
+
 class Agent(object):
     """Abstract super-class for all types of Agent."""
 
@@ -58,7 +59,8 @@ class Environment(object):
     
     def advance_time(self):
         self.time += 1
-      
+
+
 class Simulation(Thread):
     """A single realisation of an agent-based model"""
 
