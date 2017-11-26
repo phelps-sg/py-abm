@@ -46,7 +46,8 @@ class BarCustomer(IntelligentAgent):
     def make_decision(self):
         """Decide whether or not to attend the bar"""
         return self.choose_action()
-    
+
+
 class ElFarolBar(Environment):
     """An environment representing the El Farol Bar"""
  
@@ -75,7 +76,8 @@ class ElFarolBar(Environment):
         self.history.append(self.minority_decision)
         # Call the superclass to update the clock etc.
         super(ElFarolBar, self).advance_time()
-        
+
+
 class ElFarolBarSimulation(Simulation):
     
     def __init__(self, num_agents=101, epsilon=0.5,
